@@ -1,20 +1,51 @@
-import { gql, useQuery } from '@apollo/client'
+import { useEffect } from 'react'
+import { gql, useQuery, useSubscription } from '@apollo/client'
 
 const QUERY = gql`
 	query {
-		health
+		greeting
+	}
+`
+
+const COMMENTS_SUBSCRIPTION = gql`
+	subscription {
+		messageAdded
 	}
 `
 
 const Home = () => {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const { loading, error: _, data } = useQuery<{ health: boolean }>(QUERY)
+	// caching, fetchPolicy and updating the cache is a bit complicated! reference this repo https://github.com/uptoskill/graphql-job-board
+	// also fragments are interesting
+	// same here there are handler functions for when the operation is complete
+	const { loading, data } = useQuery<{ greeting: boolean }>(QUERY, {
+		fetchPolicy: 'no-cache',
+	})
+
+	// There are handler functions for when we recieve the data
+	const { data: subData } = useSubscription<{ messageAdded: string }>(
+		COMMENTS_SUBSCRIPTION
+	)
+
+	// This should only happen when we login
+	useEffect(() => {
+		localStorage.setItem(
+			'auth-token',
+			'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoiTVkgQVdFU09NRSBVU0VSISEiLCJpZCI6InNvbWUgaWQiLCJpYXQiOjE2MzkxNjYxODR9.-vnLeAFoAYkqc4SBWHfVf10mdYctPvc5PnizKPXUBDQ'
+		)
+	}, [])
 
 	if (loading === true) {
 		return <h1>LOADING!!!</h1>
 	}
 
-	return <div>HOME PAGE HERER!!! {data?.health ? 'true' : 'false'}</div>
+	console.log(subData)
+
+	return (
+		<>
+			<div>HOME PAGE HERER!!! {data?.greeting ? 'true' : 'false'}</div>
+			<div>SUB DATA HERE!! {subData?.messageAdded}</div>
+		</>
+	)
 }
 
 export default Home
