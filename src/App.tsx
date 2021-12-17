@@ -11,6 +11,7 @@ import { WebSocketLink } from '@apollo/client/link/ws'
 import { getMainDefinition } from '@apollo/client/utilities'
 
 import Home from './Pages/Home'
+import './index.css'
 
 const getToken = () => localStorage.getItem('auth-token')
 

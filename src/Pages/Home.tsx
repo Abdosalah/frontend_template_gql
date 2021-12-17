@@ -17,14 +17,14 @@ const Home = () => {
 	// caching, fetchPolicy and updating the cache is a bit complicated! reference this repo https://github.com/uptoskill/graphql-job-board
 	// also fragments are interesting
 	// same here there are handler functions for when the operation is complete
-	const { loading, data } = useQuery<{ greeting: boolean }>(QUERY, {
-		fetchPolicy: 'no-cache',
-	})
+	// const { loading, data } = useQuery<{ greeting: boolean }>(QUERY, {
+	// 	fetchPolicy: 'no-cache',
+	// })
 
 	// There are handler functions for when we recieve the data
-	const { data: subData } = useSubscription<{ messageAdded: string }>(
-		COMMENTS_SUBSCRIPTION
-	)
+	// const { data: subData } = useSubscription<{ messageAdded: string }>(
+	// 	COMMENTS_SUBSCRIPTION
+	// )
 
 	// This should only happen when we login
 	useEffect(() => {
@@ -34,16 +34,9 @@ const Home = () => {
 		)
 	}, [])
 
-	if (loading === true) {
-		return <h1>LOADING!!!</h1>
-	}
-
-	console.log(subData)
-
 	return (
 		<>
-			<div>HOME PAGE HERER!!! {data?.greeting ? 'true' : 'false'}</div>
-			<div>SUB DATA HERE!! {subData?.messageAdded}</div>
+		<div className="text-3xl bg-blue-300"> HERERE!!!</div>
 		</>
 	)
 }
