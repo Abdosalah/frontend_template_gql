@@ -1,4 +1,3 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import {
 	ApolloClient,
 	InMemoryCache,
@@ -10,8 +9,9 @@ import { setContext } from '@apollo/client/link/context'
 import { WebSocketLink } from '@apollo/client/link/ws'
 import { getMainDefinition } from '@apollo/client/utilities'
 
-import Home from './Pages/Home'
+import Routing from './Routing'
 import './index.css'
+import 'antd/dist/antd.css'
 
 const getToken = () => localStorage.getItem('auth-token')
 
@@ -62,11 +62,7 @@ const client = new ApolloClient({
 const App = () => {
 	return (
 		<ApolloProvider client={client}>
-			<BrowserRouter>
-				<Routes>
-					<Route path="/" element={<Home />} />
-				</Routes>
-			</BrowserRouter>
+			<Routing />
 		</ApolloProvider>
 	)
 }
