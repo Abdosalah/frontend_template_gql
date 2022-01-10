@@ -11,9 +11,7 @@ import { getMainDefinition } from '@apollo/client/utilities'
 
 import Routing from './Routing'
 import './index.css'
-import 'antd/dist/antd.css'
-
-const getToken = () => localStorage.getItem('auth-token')
+import { getToken, UserProvider } from './state'
 
 const authLink = setContext((_, { headers }) => {
 	// get the authentication token from local storage if it exists
@@ -62,7 +60,9 @@ const client = new ApolloClient({
 const App = () => {
 	return (
 		<ApolloProvider client={client}>
-			<Routing />
+			<UserProvider>
+				<Routing />
+			</UserProvider>
 		</ApolloProvider>
 	)
 }
